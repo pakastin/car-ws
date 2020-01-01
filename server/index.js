@@ -11,12 +11,41 @@ io.on('connection', (socket) => {
   socket.broadcast.emit('join');
 
   socket.on('params', (params) => {
-    if (~origin.indexOf('pakastin.github.io')) {
-      socket.broadcast.emit('params', {
-        id,
-        params
-      });
+    if (!~origin.indexOf('pakastin.github.io')) {
+      return;
     }
+    const {
+      x,
+      y,
+      xVelocity,
+      yVelocity,
+      power,
+      reverse,
+      angle,
+      angularVelocity,
+      isThrottling,
+      isReversing,
+      isTurningLeft,
+      isTurningRight
+    } = params;
+
+    socket.broadcast.emit('params', {
+      id,
+      params: {
+        x,
+        y,
+        xVelocity,
+        yVelocity,
+        power,
+        reverse,
+        angle,
+        angularVelocity,
+        isThrottling,
+        isReversing,
+        isTurningLeft,
+        isTurningRight
+      }
+    });
   });
 
   socket.on('disconnect', () => {
