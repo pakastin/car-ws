@@ -6,6 +6,13 @@ server.listen(80);
 io.on('connection', (socket) => {
   const { id } = socket;
 
+  const origin = socket.request.headers.referer || socket.request.headers.origin || '';
+
+  if (!~origin.indexOf('pakastin.github.io')) {
+    socket.disconnect();
+    return;
+  }
+
   socket.on('params', (params) => {
     socket.broadcast.emit('params', {
       id,
