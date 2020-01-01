@@ -8,16 +8,15 @@ io.on('connection', (socket) => {
 
   const origin = socket.request.headers.referer || socket.request.headers.origin || '';
 
-  if (!~origin.indexOf('pakastin.github.io')) {
-    socket.disconnect();
-    return;
-  }
+  socket.broadcast.emit('join');
 
   socket.on('params', (params) => {
-    socket.broadcast.emit('params', {
-      id,
-      params
-    });
+    if (~origin.indexOf('pakastin.github.io')) {
+      socket.broadcast.emit('params', {
+        id,
+        params
+      });
+    }
   });
 
   socket.on('disconnect', () => {
