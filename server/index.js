@@ -11,9 +11,6 @@ io.on('connection', (socket) => {
   socket.broadcast.emit('join');
 
   socket.on('params', (params) => {
-    if (!~origin.indexOf('pakastin.github.io')) {
-      return;
-    }
     const {
       x,
       y,
@@ -43,7 +40,8 @@ io.on('connection', (socket) => {
         isThrottling,
         isReversing,
         isTurningLeft,
-        isTurningRight
+        isTurningRight,
+        ghost: !~origin.indexOf('pakastin.github.io')
       }
     });
   });
