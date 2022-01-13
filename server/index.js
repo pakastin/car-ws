@@ -50,8 +50,7 @@ io.on('connection', (socket) => {
         isShooting,
         lastShootAt,
         isTurningLeft,
-        isTurningRight,
-        ghost: !~origin.indexOf('pakastin.github.io')
+        isTurningRight
       }
     });
   });
