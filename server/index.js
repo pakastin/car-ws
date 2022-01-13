@@ -29,6 +29,7 @@ io.on('connection', (socket) => {
       isThrottling,
       isReversing,
       isShooting,
+      lastShootAt,
       isTurningLeft,
       isTurningRight
     } = params;
@@ -47,6 +48,7 @@ io.on('connection', (socket) => {
         isThrottling,
         isReversing,
         isShooting,
+        lastShootAt,
         isTurningLeft,
         isTurningRight,
         ghost: !~origin.indexOf('pakastin.github.io')
