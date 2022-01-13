@@ -1,7 +1,7 @@
 const server = require('http').createServer();
 const io = require('socket.io')(server, {
   cors: {
-    origin: '*',
+    origin: 'https://car.js.org',
     methods: ['GET'],
     credentials: true
   }
@@ -28,6 +28,7 @@ io.on('connection', (socket) => {
       angularVelocity,
       isThrottling,
       isReversing,
+      isShooting,
       isTurningLeft,
       isTurningRight
     } = params;
@@ -45,6 +46,7 @@ io.on('connection', (socket) => {
         angularVelocity,
         isThrottling,
         isReversing,
+        isShooting,
         isTurningLeft,
         isTurningRight,
         ghost: !~origin.indexOf('pakastin.github.io')
