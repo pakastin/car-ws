@@ -12,8 +12,6 @@ server.listen(80);
 io.on('connection', (socket) => {
   const { id } = socket;
 
-  const origin = socket.request.headers.referer || socket.request.headers.origin || '';
-
   socket.broadcast.emit('join');
 
   socket.on('params', (params) => {
@@ -26,12 +24,16 @@ io.on('connection', (socket) => {
       reverse,
       angle,
       angularVelocity,
+      isTurningLeft,
+      isTurningRight,
       isThrottling,
       isReversing,
+      isHit,
+      isShot,
       isShooting,
       lastShootAt,
-      isTurningLeft,
-      isTurningRight
+      name,
+      points
     } = params;
 
     socket.broadcast.emit('params', {
@@ -45,12 +47,16 @@ io.on('connection', (socket) => {
         reverse,
         angle,
         angularVelocity,
+        isTurningLeft,
+        isTurningRight,
         isThrottling,
         isReversing,
+        isHit,
+        isShot,
         isShooting,
         lastShootAt,
-        isTurningLeft,
-        isTurningRight
+        name,
+        points
       }
     });
   });
