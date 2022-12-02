@@ -8,6 +8,7 @@ module.exports = {
       watch: true,
       max_memory_restart: '1G',
       env: {
+        NODE_PORT: 8082,
         NODE_ENV: 'production'
       }
     }
