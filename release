@@ -1,1 +1,0 @@
-rsync -avz --exclude node_modules --exclude .git . root@wsa2.pakastin.fi:/home/car-ws

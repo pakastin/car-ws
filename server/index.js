@@ -4,12 +4,7 @@ const express = require('express');
 
 const app = express();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server, {
-  cors: {
-    origin: 'https://car.js.org',
-    credentials: true
-  }
-});
+const io = require('socket.io')(server);
 
 server.listen(NODE_PORT, (err) => {
   if (err) {
@@ -62,7 +57,7 @@ io.on('connection', (socket) => {
       isShot,
       isShooting,
       lastShootAt,
-      name,
+      name: restrictName(name || ''),
       points
     };
 
@@ -83,3 +78,11 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('leave', id);
   });
 });
+
+function restrictName (name) {
+  if (name.length > 15) {
+    return `${name.slice(0, 15)}...`;
+  } else {
+    return name;
+  }
+}

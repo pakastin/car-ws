@@ -1,0 +1,5 @@
+#!/bin/bash
+docker context use pakastin
+docker build --tag ghcr.io/pakastin/car .
+docker push ghcr.io/pakastin/car
+docker service update --image ghcr.io/pakastin/car pakastin_car
