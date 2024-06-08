@@ -1,10 +1,14 @@
 const { NODE_PORT } = process.env;
 
-const express = require('express');
+const express = require("express");
 
 const app = express();
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
+
+app.get("/ping", (req, res, next) => {
+  res.sendStatus(200);
+});
 
 server.listen(NODE_PORT, (err) => {
   if (err) {
@@ -13,12 +17,12 @@ server.listen(NODE_PORT, (err) => {
   console.log(`Listening port ${NODE_PORT}`);
 });
 
-io.on('connection', (socket) => {
+io.on("connection", (socket) => {
   const { id } = socket;
 
-  socket.broadcast.emit('join');
+  socket.broadcast.emit("join");
 
-  socket.on('params', (params) => {
+  socket.on("params", (params) => {
     const {
       x,
       y,
@@ -37,7 +41,7 @@ io.on('connection', (socket) => {
       isShooting,
       lastShootAt,
       name,
-      points
+      points,
     } = params;
 
     const newParams = {
@@ -57,8 +61,8 @@ io.on('connection', (socket) => {
       isShot,
       isShooting,
       lastShootAt,
-      name: restrictName(name || ''),
-      points
+      name: restrictName(name || ""),
+      points,
     };
 
     if (isHit || isShot) {
@@ -68,18 +72,18 @@ io.on('connection', (socket) => {
       newParams.isShot = false;
     }
 
-    socket.broadcast.emit('params', {
+    socket.broadcast.emit("params", {
       id,
-      params: newParams
+      params: newParams,
     });
   });
 
-  socket.on('disconnect', () => {
-    socket.broadcast.emit('leave', id);
+  socket.on("disconnect", () => {
+    socket.broadcast.emit("leave", id);
   });
 });
 
-function restrictName (name) {
+function restrictName(name) {
   if (name.length > 15) {
     return `${name.slice(0, 15)}...`;
   } else {
