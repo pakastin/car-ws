@@ -2,4 +2,4 @@
 docker context use pakastin
 docker build --tag ghcr.io/pakastin/car .
 docker push ghcr.io/pakastin/car
-docker service update --image ghcr.io/pakastin/car pakastin_car
+docker service update --with-registry-auth --force --image ghcr.io/pakastin/car pakastin_car

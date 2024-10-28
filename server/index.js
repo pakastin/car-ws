@@ -1,13 +1,28 @@
 const { NODE_PORT } = process.env;
 
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
-const server = require("http").createServer(app);
-const io = require("socket.io")(server);
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "https://car.js.org",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
+app.use(
+  cors({
+    origin: "https://car.js.org",
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 
 app.get("/ping", (req, res, next) => {
-  res.sendStatus(200);
+  res.send("pong");
 });
 
 server.listen(NODE_PORT, (err) => {
