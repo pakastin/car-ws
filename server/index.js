@@ -18,10 +18,12 @@ app.use(
     origin: "https://car.js.org",
     methods: ["GET", "POST"],
     credentials: true,
-  })
+  }),
 );
 
 app.get("/ping", (req, res, next) => {
+  res.set("Cache-Control", "no-store");
+  res.set("Content-Type", "text/plain");
   res.send("pong");
 });
 
